@@ -2,6 +2,7 @@
 A short and simple introduction to core command line commands and concepts
 
 ## Contents
+0. Introduction
 1. Getting Your Bearings
     1.1. `whoami`
         1.1.1. !!! CRITICAL NOTE ABOUT SECURITY !!!
@@ -26,11 +27,31 @@ A short and simple introduction to core command line commands and concepts
     1.12. `realpath`
     1.13. `history`
     1.14. Conclusion: Part 1
+2. Working With Files
+    2.1. `which`
+    2.2. `mkdir`
+    2.3. `touch`
+    2.4. `rm`
+        2.4.1. !!! NEVER RUN THE FOLLOWING !!! 
+    2.5. `mv`
+    2.6. `cp`
+    2.7. Wildcards
+    2.8. Pipes
+    2.9. `cat`
+    2.10. `head`
+    2.11. `tail`
+    2.12. `wc`
+    2.13. `sort`
+    2.14. `grep`
+    2.15. Text Editors - Nano + Vim
+    2.16. Conclusion: Part 2
 
-## 1. Getting Your Bearings
+## 0. Introduction
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
 
 This guide assumes you are using a Unix-like system such as macOS, Linux, the Windows Subsystem for Linux 2, or are using a tool such as Git Bash for Windows. The base Windows command line utility and Powershell often use quite different commands to execute the functionality described here, and will not be covered in this guide.
+
+## 1. Getting Your Bearings
 
 ### 1.1. `whoami`
 Getting started with the command line may have you feeling a bit existential. Thankfully, the terminal is there to help. Let's run your first command. Type the following and press enter:  
@@ -206,7 +227,6 @@ $ ls -la
 > ...
 ```
 
-
 ### 1.10. `clear`
 The terminal is looking pretty crowded. Let's clear some space.
 
@@ -287,3 +307,185 @@ $ histroy
 
 ### 1.14. Conclusion: Part 1
 With what we've covered so far, you should always know where you are and how to get anywhere in your file system. If you forget a command you've run, you can find it in your history; and if you don't know what a command does or what its available options are, you can get a short or a long explanation right from your device. In the next section we'll cover some basics of working with files and file management in the command line so that once you've gone where you need to go you can start taking action.
+
+## 2. Working With Files
+
+### 2.1. which
+How do we know whether we have access to a command line program or not?
+
+```
+$ whatis which
+> which (1)            - shows the full path of (shell) commands.
+
+$ which which
+> /usr/bin/which
+```
+
+If you have the command installed, the terminal will return the path to the command. If you do not, it will return something like "No <COMMAND> in (PATH)". The Path is a long string of absolute paths separated by `:`'s. This represents everywhere your terminal looks for the commands you enter. We'll cover how to add directories to your path in Part 3.
+
+### 2.2. mkdir
+In this section we'll be creating, altering, and deleting directories and files. Navigate to somewhere you'd like to store the files for this section using the skills you learned in Part 1. Then we'll make a new directory. You can name it whatever you'd like.
+
+```
+$ mkdir directory_name
+```
+
+Navigate into the directory and we'll run the rest of the commands from there.
+
+### 2.3. touch
+We can create a new empty file named "file_name" with the `touch` command. You don't need a file extension, but you can add one like `.txt` if you prefer.
+
+```
+$ touch file_name
+```
+
+### 2.4. rm
+Be ***extremely careful and absolutely certain*** with this command. Unlike moving a file to the Trash Bin in a GUI environment, there is no way to retrieve the file or directory once you have deleted it in this manner. 
+
+We can remove files with `rm`.
+
+```
+$ rm file_name
+```
+
+If we try to run `rm` on a directory, we will get an error. Using the `-r` / `--recursive` flag will allow us to irrevocably delete a directory ***and all of its contents***.
+
+```
+$ rm -r directory_name
+```
+
+#### 2.4.1. ***!!! NEVER RUN THE FOLLOWING !!!***
+The following command is extremely dangerous. It forces the irrevocable recursive deletion of everything in your root directory, meaning everything on your device. There are some memes about running this command, so use this knowledge for recognition, but please never run this yourself.
+
+```
+!!! DO NOT RUN THIS COMMAND !!!
+$ rm -rf /
+!!! DO NOT RUN THIS COMMAND !!!
+```
+
+### 2.5. mv
+Let's create another directory.
+
+```
+$ mkdir second_directory
+```
+
+We can move the `file_name` file into this directory with `mv`.
+
+```
+$ mv file_name second_directory
+```
+
+We can check that the file did indeed move where we think it did using `ls`
+
+```
+$ ls
+> second_directory
+
+$ ls second_directory
+> file_name
+```
+
+We can also use `mv` to rename a file
+
+```
+$ mv file_name new_name
+```
+
+### 2.6. cp
+We can copy a file using the `cp` command
+
+```
+$ cp new_name new_file
+
+$ ls 
+> new_name new_file
+```
+
+### 2.7. Wildcards
+
+### 2.8. Pipes
+There are 3 kinds of "pipes" we'll discuss. Pipes are used to take the output of one command and use it in some way. The `>` pipe will *replace* the contents of the destination with the output of your command. The `>>` pipe will *append* the output of your command to the destination, adding to rather than replacing. The `|` pipe takes the output of one command and uses it as the input for the following command.
+
+Note: If you see yourself utilizing the command line frequently or for more advanced uses, I strongly recommend learning more about standard in ("stdin"), standard out ("stdout"), and standard error ("stderr").
+
+The following will add the text `Hello, World` to `new_file`
+
+```
+$ echo "Hello, World!" > new_file
+```
+
+!!! If we run the command again with different text and the same pipe, it will replace the old text with our new text. ***This can be dangerous*** because though the examples only use a single line of text, you can accidentally replace the entire file's contents with as little as a single character using this pipe and not have any way of returning to the original contents. Please be careful with this pipe.
+
+The following will add the text `This is a new line` to `new_file` rather than replacing `Hello, World~`
+
+```
+$ echo "This is a new line" >> new_file
+```
+
+We'll examine the usage of `|` soon.
+
+### 2.9. cat
+We can use the `cat` command to print out the contents of our file.
+
+```
+$ cat new_file
+> Hello, World!
+> This is a new line
+```
+
+### 2.10. head
+If you have a very long file and only want to examine the beginning rather than see the whole things, we use `head`.
+
+```
+$ head very_long_file
+> Line 1
+> Line 2
+> Line 3
+> Line 4
+> Line 5
+> Line 6
+> Line 7
+> Line 8
+> Line 9
+> Line 10
+```
+
+You can specify the number of lines with with `-n` flag.
+
+```
+$ head -n 5 very_long_file
+> Line 1
+> Line 2
+> Line 3
+> Line 4
+> Line 5
+```
+
+### 2.11. tail
+We can do something similar but with the end of the file using `tail`
+
+```
+$ tail very_long_file
+> Line 991
+> Line 992
+> Line 993
+> Line 994
+> Line 995
+> Line 996
+> Line 997
+> Line 998
+> Line 999
+> Line 1000
+```
+
+### 2.12. wc
+
+### 2.13. sort
+
+### 2.14. grep
+
+### 2.15. Text Editors - Nano + Vim
+
+### 2.16. Conclusion: Part 2
+
