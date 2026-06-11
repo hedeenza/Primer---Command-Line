@@ -20,9 +20,12 @@ A short and simple introduction to core command line commands and concepts
     1.8. `man`
     1.9. `ls` with Options
     1.10. `clear`
-    1.11 `realpath`
-    1.12. `cd`
+    1.11. `cd`
+        1.11.1. Aside: Tab Completion
+        1.11.2. Going Home
+    1.12. `realpath`
     1.13. `history`
+    1.14. Conclusion: Part 1
 
 ## 1. Getting Your Bearings
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
@@ -168,8 +171,11 @@ $ man ls
 
 Running this command provides us with all of the details for using the specified command. The "Synopsis" section will often contain the "format" the command takes. For example, `ls [OPTION]... [FILE]...` means that after the `ls` command, you will optionally list any flags/options you want (found in the "Description" section), and then optionally add a file (more likely a directory) to list the contents of. We have the hint that these additions are optional because they are [written in square brackets].
 
+Many options have both "short" and "long" forms. The short forms will often consist of a dash (sometimes read as "tack") and a single case-sensitive character. Long forms will consist of two dashes and a full word. Both forms work the same way, you enter them differently when you're using more than one. Sometimes short form options can be grouped together on a single dash, like `-cvf` after the `tar` command, where the long forms would require separation, like `--create --file <OUTPUT_FILE> --verbose <INTPUT_FILE>`.
+
 You can navigate man pages with the up and down arrow keys, or in some cases using Vim-like bindings. We'll briefly discuss Vim later, but here are a few bare-bones commands to help you comfortably move around the manual:
 
+- q = quit
 - j = Move down
 - k = Move up
 - gg (pressing the G key twice) = Move to the top of the page
@@ -179,6 +185,7 @@ You can navigate man pages with the up and down arrow keys, or in some cases usi
 - N = Cycle backward through search results.
 
 ### 1.9. `ls` with Options
+Let's try running `ls` with another option. This time we'll use the flag right at the top of the list. Adding this flag will also list the "hidden" files whose names begin with a period. Note that we could have used `ls --all` to produce the same result.
 
 ```
 $ ls -a
@@ -188,9 +195,15 @@ $ ls -a
 > ...
 ```
 
+We can combine multiple short flags into one block with the `ls` command as well.
 
 ```
 $ ls -la
+> Permissions   Size    User        Date Modified   Name
+> ...
+> .rw-r--r--       -    user-name   01-01-1999      .bash_history
+> .rw-r--r--       -    user-name   01-01-1999      .bashrc
+> ...
 ```
 
 
@@ -201,18 +214,76 @@ The terminal is looking pretty crowded. Let's clear some space.
 $ clear
 ```
 
+In some cases this command will not truly "clear" the screen, but rather shift the display up, allowing you to "scroll back" to where you were before.
+
 ### 1.11. `cd`
+We've learned several tools so far. We know who we are (`whoami`), where we are (`pwd`, Paths), what's here (`ls`), and how to learn what our commands do (`whatis`, `man`). Now it's time to venture from Home. Let's "change directory" into our "Documents".
 
 ```
 $ cd Documents
 ```
 
-#### 1.12.1 Aside: Tab Completion
+From here we can run all the same commands as before to get a lay of the land. We can double check that we are where we think we are with `pwd` (though many terminals display at least a partial working directory path before your equivalent `$`), or list what's here with `ls`. Practice the commands you've learned so far by exploring your file system on the command line.
 
+Note that you do not need to run `cd` once for each directory "layer". If you know where you want to go, you can string the names together in one command, separated by `/`.
 
-### 1.12 `realpath`
+```
+$ cd Documents/Program_A/Project_B/Task_C
+```
 
+#### 1.11.1. Aside: Tab Completion
+You may have long directory names. Typing them out exactly in full each time can become incredibly tedious. Tab completion is here to help. When you've typed enough of a file or directory name that it could "unambiguously point to only one thing", you can press the TAB key and it should complete the name for you. If you hit TAB and there are multiple matches, it may complete "as far as it can" and then list potential matches. Some terminals allow selection of the matches, while others do not. This can take a little while to get used to, but it's life changing when you do.
 
-### 1.14 `history`
+#### 1.11.2. Going Home
+Wait, we've gone as far as we can and there are no more directories to `cd` into. How do we go back? There are two main options. The first is a little more tedious but will allow us to review an important use of relative file paths. This command will bring you to the parent directory of your current directory ("up one layer").
 
+```
+$ cd ..
+```
 
+We could repeat this process over and over again to get back home:
+
+```
+$ cd ..
+$ cd ..
+$ cd ..
+...
+```
+
+Or we could use `/` to indicate that we want to go to the parent directory of the parent directory of the... and so on.
+
+```
+$ cd ../../../and so on..
+```
+
+We may not always want to go all the way back home. Sometimes we may want to go to, or refer to a directory that is in the parent directory. In that case we can use our knowledge of relative file paths:
+
+```
+$ cd ../../Task_C/Item_D
+```
+
+When it is time to go home, wherever we are in our file system, we can get there in one step.
+
+```
+$ cd ~
+```
+
+### 1.12. `realpath`
+If you ever need to get the full file path of any file, you can use the `realpath` command.
+
+```
+$ realpath spreadsheet.csv
+> /home/username/Documents/Program_A/Project_B/Task_C/Item_D/spreadsheet.csv
+```
+
+### 1.13. `history`
+We've run a lot of commands so far. If you ever want to refer back to a command you've previously run, you can do so with `history`.
+
+```
+$ histroy
+> Number   Command
+> ...
+```
+
+### 1.14. Conclusion: Part 1
+With what we've covered so far, you should always know where you are and how to get anywhere in your file system. If you forget a command you've run, you can find it in your history; and if you don't know what a command does or what its available options are, you can get a short or a long explanation right from your device. In the next section we'll cover some basics of working with files and file management in the command line so that once you've gone where you need to go you can start taking action.
