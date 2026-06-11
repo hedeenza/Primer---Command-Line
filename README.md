@@ -1,4 +1,4 @@
-# Primer---Command-Line
+# Primer - Command-Line
 A short and simple introduction to core command line commands and concepts
 
 ## Contents
@@ -16,12 +16,13 @@ A short and simple introduction to core command line commands and concepts
         1.5.3. Home (~)
     1.6. `ls`
     1.7. Command Options / Flags
+        1.7.1. Aside: File Permissions
     1.8. `man`
     1.9. `ls` with Options
-    1.10. Aside: File Permissions
+    1.10. `clear`
     1.11 `realpath`
-    1.12. `clear`
-    1.13. `cd`
+    1.12. `cd`
+    1.13. `history`
 
 ## 1. Getting Your Bearings
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
@@ -82,7 +83,7 @@ $ whatis whatis
 > whatis (1)           - display one-line manual page descriptions
 ```
 
-If you just need a quick answer to "what does this command do?" it's a nice option. Most commands come with a built in manual containing much more information about its function. We'll cover that in 1.9.
+If you just need a quick answer to "what does this command do?" it's a nice option. Most commands come with a built in manual containing much more information about its function. We'll cover that in 1.8.
 
 ### 1.4. `pwd`
 We know who we are, and there doesn't seem to by anything around. How do we find out where we are? We can print our "working directory" (or "the folder you're currently looking in") to the terminal:
@@ -125,9 +126,93 @@ $ ls
 Your output may look different, but it is likely that your home directory contains the default, primary directory's we're familiar with, plus anything else you've saved to this directory. Directories may be displayed with a trailing forward-slash (`Desktop/`) or their text may be colored differently, or each item may look exactly the same depending on your settings.
 
 ### 1.7. Command Options / Flags
+I've always found this view of directory contents crowded. Let's add a "flag" to our command and see what happens.
+
+```
+$ ls -l
+> Permissions   Size    User        Date Modified   Name
+> drwxr-xr-x       -    user-name   01-01-1999      Desktop
+> drwxr-xr-x       -    user-name   01-01-1999      Documents
+> ...
+```
+
+By adding the `-l` flag, or "option", we see the same content as before but with additional details. The "Permissions" column can be seen as a representation of "what kind of file is this, and who is allowed to do what with this file". "Size" is the file size (does not display for directories). "User" is the owner of the file. "Date Modified" is when the file or directory contents were last changed. "Name" is the name of the file or directory.
+
+Most command line tools utilize flags to alter their functionality in some way. Flags are not consistent across tools. For example, the `-l` flag we just added to `ls` will not have the same effect on the `whatis` command, and `echo` does not have an `-l` flag at all.
+
+#### 1.7.1. Aside: File Permissions
+File permissions are represented by a 10-character string. The first character tells you what kind of file it is: `.` for a file, `d` for a directory, and sometimes `l` for a link. The following 9 characters are divided into groups of 3. The first 3 refer to the User, the middle 3 to the Group, and the last 3 to Others. There are 4 common characters: `r`, `w`, `x`, and `-`. You may also see an `s` or `t` where the `x`'s are. You can learn more about those cases in [this article](https://www.redhat.com/en/blog/suid-sgid-sticky-bit) by Redhat. `r` means the specified individuals are able to *read* the file. `w` means the specified individuals are able to *write* to the file. `x` means the specified individuals are able to *execute* the file. `-` means the specified individuals are not able to perform that action.
+
+As an element of a comprehensive security plan, there's a concept known as "least permissions". This means everything should have as few enabled permissions as possible while still allowing the file to perform the necessary functions, with the knowledge that you can change permissions later. That way files that aren't supposed to be accessed in certain ways have at least a little protection from accidents or malicious actors. We'll discuss changing permissions later, but if you're curious about this topic I encourage you to explore more.
+
+Note: Directories are a special case. You need to be able to "execute" them to open them. 
+
 ### 1.8. `man`
+How did we know that `ls` even had that option? Are we condemned to need to memorize every possible option of every possible command we could ever need? No! You likely have access to a manual for almost every single command available to you on the command line through the `man` command. The format is `man <command-you-want-to-learn-about>`
+
+```
+$ man ls
+> Name
+> ...
+> Synopsis
+> ...
+> Description
+> ...
+> Author
+> ...
+> Reporting Bugs
+> ...
+> Copyright
+> ...
+```
+
+Running this command provides us with all of the details for using the specified command. The "Synopsis" section will often contain the "format" the command takes. For example, `ls [OPTION]... [FILE]...` means that after the `ls` command, you will optionally list any flags/options you want (found in the "Description" section), and then optionally add a file (more likely a directory) to list the contents of. We have the hint that these additions are optional because they are [written in square brackets].
+
+You can navigate man pages with the up and down arrow keys, or in some cases using Vim-like bindings. We'll briefly discuss Vim later, but here are a few bare-bones commands to help you comfortably move around the manual:
+
+- j = Move down
+- k = Move up
+- gg (pressing the G key twice) = Move to the top of the page
+- G (Shift + G) = Move to the bottom of the page
+- / = Open the search option. Type the word you'd like to search for and press ENTER.
+- n = Cycle forward through search results.
+- N = Cycle backward through search results.
+
 ### 1.9. `ls` with Options
-### 1.10. Aside: File Permissions
-### 1.11 `realpath`
-### 1.12. `clear`
-### 1.13. `cd`
+
+```
+$ ls -a
+> ...
+> .bash_history
+> .bashrc
+> ...
+```
+
+
+```
+$ ls -la
+```
+
+
+### 1.10. `clear`
+The terminal is looking pretty crowded. Let's clear some space.
+
+```
+$ clear
+```
+
+### 1.11. `cd`
+
+```
+$ cd Documents
+```
+
+#### 1.12.1 Aside: Tab Completion
+
+
+### 1.12 `realpath`
+
+
+### 1.14 `history`
+
+
