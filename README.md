@@ -2,50 +2,50 @@
 A short and simple introduction to core command line commands and concepts
 
 ## Contents
-0. Introduction
-1. Getting Your Bearings
-    1.1. `whoami`
-        1.1.1. !!! CRITICAL NOTE ABOUT SECURITY !!!
-    1.2. `echo`
-    1.3. `whatis`
-    1.4. `pwd`
-    1.5. Paths
-        1.5.1. Root (/)
-        1.5.2. Absolute and Relative Paths
-            1.5.3.1. `.`
-            1.5.3.2. `..`
-        1.5.3. Home (~)
-    1.6. `ls`
-    1.7. Command Options / Flags
-        1.7.1. Aside: File Permissions
-    1.8. `man`
-    1.9. `ls` with Options
-    1.10. `clear`
-    1.11. `cd`
-        1.11.1. Aside: Tab Completion
-        1.11.2. Going Home
-    1.12. `realpath`
-    1.13. `history`
-    1.14. Conclusion: Part 1
-2. Working With Files
-    2.1. `which`
-    2.2. `mkdir`
-    2.3. `touch`
-    2.4. `rm`
-        2.4.1. !!! NEVER RUN THE FOLLOWING !!! 
-    2.5. `mv`
-    2.6. `cp`
-    2.7. Wildcards
-    2.8. Pipes
-    2.9. `cat`
-    2.10. `head`
-    2.11. `tail`
-    2.12. `wc`
-    2.13. `sort`
-    2.14. `grep`
-    2.15. Text Editors - Nano + Vim
-    2.16. Conclusion: Part 2
-
+0. Introduction  
+1. Getting Your Bearings  
+    1.1. `whoami`  
+    1.1.1. !!! CRITICAL NOTE ABOUT SECURITY !!!  
+    1.2. `echo`  
+    1.3. `whatis`  
+    1.4. `pwd`  
+    1.5. Paths  
+        1.5.1. Root (/)  
+        1.5.2. Absolute and Relative Paths  
+            1.5.2.1. `.`  
+            1.5.2.2. `..`  
+        1.5.3. Home (~)  
+    1.6. `ls`  
+    1.7. Command Options / Flags  
+        1.7.1. Aside: File Permissions  
+    1.8. `man`  
+    1.9. `ls` with Options  
+    1.10. `clear`  
+    1.11. `cd`  
+        1.11.1. Aside: Tab Completion  
+        1.11.2. Going Home  
+    1.12. `realpath`  
+    1.13. `history`  
+    1.14. Conclusion: Part 1  
+2. Working With Files  
+    2.1. `which`  
+    2.2. `mkdir`  
+    2.3. `touch`  
+    2.4. `rm`  
+        2.4.1. !!! NEVER RUN THE FOLLOWING !!!   
+    2.5. `mv`  
+    2.6. `cp`  
+    2.7. Wildcards  
+    2.8. Pipes  
+    2.9. `cat`  
+    2.10. `head`  
+    2.11. `tail`  
+    2.12. `wc`  
+    2.13. `sort`  
+    2.14. `grep`  
+    2.15. Text Editors - Nano + Vim  
+    2.16. Conclusion: Part 2  
+  
 ## 0. Introduction
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
 
