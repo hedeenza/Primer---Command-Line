@@ -36,18 +36,20 @@ A short and simple introduction to core command line commands and concepts
     2.5. [`mv`](https://github.com/hedeenza/Primer---Command-Line#25-mv)  
     2.6. [`cp`](https://github.com/hedeenza/Primer---Command-Line#26-cp)  
     2.7. [Wildcards](https://github.com/hedeenza/Primer---Command-Line#27-wildcards)  
-    2.8. [Pipes](https://github.com/hedeenza/Primer---Command-Line#28-pipes)  
-    2.9. [`cat`](https://github.com/hedeenza/Primer---Command-Line#29-cat)  
-    2.10. [`head`](https://github.com/hedeenza/Primer---Command-Line#210-head)  
-    2.11. [`tail`](https://github.com/hedeenza/Primer---Command-Line#211-tail)  
-    2.12. [`wc`](https://github.com/hedeenza/Primer---Command-Line#212-wc)  
-    2.13. [`sort`](https://github.com/hedeenza/Primer---Command-Line#213-sort)  
-    2.14. [`grep`](https://github.com/hedeenza/Primer---Command-Line#214-grep)  
-    2.15. [Text Editors - Nano + Vim](https://github.com/hedeenza/Primer---Command-Line#215-text-editors---nano--vim)  
-    2.16. [Conclusion: Part 2](https://github.com/hedeenza/Primer---Command-Line#216-conclusion-part-2)  
+    2.8. [`rename`](https://github.com/hedeenza/Primer---Command-Line#28-rename)  
+    2.9. [Pipes](https://github.com/hedeenza/Primer---Command-Line#29-pipes)  
+    2.10. [`cat`](https://github.com/hedeenza/Primer---Command-Line#210-cat)  
+    2.11. [`head`](https://github.com/hedeenza/Primer---Command-Line#211-head)  
+    2.12. [`tail`](https://github.com/hedeenza/Primer---Command-Line#212-tail)  
+    2.13. [`wc`](https://github.com/hedeenza/Primer---Command-Line#213-wc)  
+    2.14. [`sort`](https://github.com/hedeenza/Primer---Command-Line#214-sort)  
+    2.15. [`file`](https://github.com/hedeenza/Primer---Command-Line#215-file)  
+    2.16. [`grep`](https://github.com/hedeenza/Primer---Command-Line#216-grep)  
+    2.17. [Text Editors - Nano + Vim](https://github.com/hedeenza/Primer---Command-Line#217-text-editors---nano--vim)  
+    2.18. [Conclusion: Part 2](https://github.com/hedeenza/Primer---Command-Line#218-conclusion-part-2)  
   
 ## 0. Introduction
-Coming from a world of Graphic User Interfaces (https://github.com/hedeenza/Primer---Command-Line#GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
+Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
 
 This guide assumes you are using a Unix-like system such as macOS, Linux, the Windows Subsystem for Linux 2, or are using a tool such as Git Bash for Windows. The base Windows command line utility and Powershell often use quite different commands to execute the functionality described here, and will not be covered in this guide.
 
@@ -310,7 +312,7 @@ With what we've covered so far, you should always know where you are and how to 
 
 ## 2. Working With Files
 
-### 2.1. which
+### 2.1. `which`
 How do we know whether we have access to a command line program or not?
 
 ```
@@ -323,7 +325,7 @@ $ which which
 
 If you have the command installed, the terminal will return the path to the command. If you do not, it will return something like "No <COMMAND> in (PATH)". The Path is a long string of absolute paths separated by `:`'s. This represents everywhere your terminal looks for the commands you enter. We'll cover how to add directories to your path in Part 3.
 
-### 2.2. mkdir
+### 2.2. `mkdir`
 In this section we'll be creating, altering, and deleting directories and files. Navigate to somewhere you'd like to store the files for this section using the skills you learned in Part 1. Then we'll make a new directory. You can name it whatever you'd like.
 
 ```
@@ -332,14 +334,14 @@ $ mkdir directory_name
 
 Navigate into the directory and we'll run the rest of the commands from there.
 
-### 2.3. touch
+### 2.3. `touch`
 We can create a new empty file named "file_name" with the `touch` command. You don't need a file extension, but you can add one like `.txt` if you prefer.
 
 ```
 $ touch file_name
 ```
 
-### 2.4. rm
+### 2.4. `rm`
 Be ***extremely careful and absolutely certain*** with this command. Unlike moving a file to the Trash Bin in a GUI environment, there is no way to retrieve the file or directory once you have deleted it in this manner. 
 
 We can remove files with `rm`.
@@ -363,7 +365,7 @@ $ rm -rf /
 !!! DO NOT RUN THIS COMMAND !!!
 ```
 
-### 2.5. mv
+### 2.5. `mv`
 Let's create another directory.
 
 ```
@@ -376,7 +378,7 @@ We can move the `file_name` file into this directory with `mv`.
 $ mv file_name second_directory
 ```
 
-We can check that the file did indeed move where we think it did using `ls`
+We can check that the file did indeed move where we think it did using `ls`.
 
 ```
 $ ls
@@ -386,14 +388,14 @@ $ ls second_directory
 > file_name
 ```
 
-We can also use `mv` to rename a file
+We can also use `mv` to rename a file.
 
 ```
 $ mv file_name new_name
 ```
 
-### 2.6. cp
-We can copy a file using the `cp` command
+### 2.6. `cp`
+We can copy a file using the `cp` command.
 
 ```
 $ cp new_name new_file
@@ -403,13 +405,70 @@ $ ls
 ```
 
 ### 2.7. Wildcards
+Sometimes you'll want to perform actions with multiple files rather than just one or one at a time. The `*` wildcard will match from zero to any number of characters. The `?` wildcard will match exactly one character. Let's create a couple files to help us.
 
-### 2.8. Pipes
+```
+$ touch file_a.txt
+$ touch file_b.txt
+$ touch file_c.txt
+$ touch a.md
+$ touch b.md
+$ touch c.csv
+$ touch d.csv
+```
+
+Let's say we wanted to "select" only the files ending in `.txt`. We can accomplish that with `*`.
+
+```
+$ ls *.txt
+> file_a.txt file_b.txt file_c.txt
+```
+
+In this instance, we could accomplish the same using the `?` wildcard, because the `?` will match any single character.
+
+```
+$ ls file_?.txt
+> file_a.txt file_b.txt file_c.txt
+```
+
+We can create a "class" of possible values by placing them inside square brackets.
+
+```
+$ ls file_[ac].txt
+> file_a.txt file_c.txt
+```
+
+Or a "range" of possible values using the square brackets.
+
+```
+$ ls file_[a-c].txt
+> file_a.txt file_b.txt file_c.txt
+```
+
+We can use a wildcard more than once.
+
+```
+$ ls *a*
+> file_a.txt a.md
+```
+
+Or mix and match.
+
+```
+$ ls *[ad]*
+> file_a.txt a.md b.md d.csv
+```
+
+Though we have only been listing the files that match our descriptions, you use this same pattern matching when performing actions like moving files or searching through each a particular kind of file with a command like `grep`.
+
+### 2.8. `rename`
+
+### 2.9. Pipes
 There are 3 kinds of "pipes" we'll discuss. Pipes are used to take the output of one command and use it in some way. The `>` pipe will *replace* the contents of the destination with the output of your command. The `>>` pipe will *append* the output of your command to the destination, adding to rather than replacing. The `|` pipe takes the output of one command and uses it as the input for the following command.
 
 Note: If you see yourself utilizing the command line frequently or for more advanced uses, I strongly recommend learning more about standard in ("stdin"), standard out ("stdout"), and standard error ("stderr").
 
-The following will add the text `Hello, World` to `new_file`
+The following will add the text `Hello, World` to `new_file`.
 
 ```
 $ echo "Hello, World!" > new_file
@@ -417,7 +476,7 @@ $ echo "Hello, World!" > new_file
 
 !!! If we run the command again with different text and the same pipe, it will replace the old text with our new text. ***This can be dangerous*** because though the examples only use a single line of text, you can accidentally replace the entire file's contents with as little as a single character using this pipe and not have any way of returning to the original contents. Please be careful with this pipe.
 
-The following will add the text `This is a new line` to `new_file` rather than replacing `Hello, World~`
+The following will add the text `This is a new line` to `new_file` rather than replacing `Hello, World!`.
 
 ```
 $ echo "This is a new line" >> new_file
@@ -425,7 +484,7 @@ $ echo "This is a new line" >> new_file
 
 We'll examine the usage of `|` soon.
 
-### 2.9. cat
+### 2.10. `cat`
 We can use the `cat` command to print out the contents of our file.
 
 ```
@@ -434,7 +493,7 @@ $ cat new_file
 > This is a new line
 ```
 
-### 2.10. head
+### 2.11. `head`
 If you have a very long file and only want to examine the beginning rather than see the whole things, we use `head`.
 
 ```
@@ -462,8 +521,8 @@ $ head -n 5 very_long_file
 > Line 5
 ```
 
-### 2.11. tail
-We can do something similar but with the end of the file using `tail`
+### 2.12. `tail`
+We can do something similar but with the end of the file using `tail`.
 
 ```
 $ tail very_long_file
@@ -479,13 +538,118 @@ $ tail very_long_file
 > Line 1000
 ```
 
-### 2.12. wc
+### 2.13. `wc`
+Sometimes you'll want information about the text in a file. `wc` by default will display the number of lines, number of words, and byte count of a file.
 
-### 2.13. sort
+```
+$ wc file.txt
+> 674 5644 35149 file.txt
+```
 
-### 2.14. grep
+You can isolate the line count with `-l`, the word count with `-w`, the character count with `-m`, or the number of characters in the longest line with `-L`. When run on multiple files using the wildcards we learned, it will also print a total.
 
-### 2.15. Text Editors - Nano + Vim
+```
+$ wc -l *
+> 0 file_a.txt
+> 0 file_b.txt
+> 0 file_c.txt
+> 0 a.md
+> 0 b.md
+> 0 c.csv
+> 0 d.csv
+> 0 total
+```
 
-### 2.16. Conclusion: Part 2
+### 2.14. `sort`
+Command outputs can be messy. Fortunately we can sort the standard output of a command by piping it into the `sort` command. For this example, we'll first add a few lines to `file_a.txt`.
 
+```
+$ echo "These" >> file_a.txt
+$ echo "are" >> file_a.txt
+$ echo "a" >> file_a.txt
+$ echo "few" >> file_a.txt
+$ echo "lines" >> file_a.txt
+```
+
+Then we'll check that the contents are what we think they are.
+
+```
+$ cat file_a.txt
+> These
+> are
+> a
+> few
+> lines
+```
+
+Now we can try sorting the output.
+
+```
+$ cat file_a.txt | sort
+> a
+> are
+> few
+> lines
+> These
+```
+
+We can reverse the output with `-r`.
+
+```
+$ cat file_a.txt | sort -r
+> These
+> lines
+> few
+> are
+> a
+```
+
+There are several more options available to `sort` that may be useful depending on your sorting needs.
+
+### 2.15. `file`
+If a file does not have a file extension it may be unclear what kind of file it really is. We can use the `file` command to find out.
+
+```
+$ file file_a.txt
+> file_a.txt: ASCII text
+```
+
+If you're ever working with a file that you don't trust for whatever reason, you may be surprised that `file` returns a different file type that you were expecting.
+
+```
+$ file suspicious.txt
+> suspicious.txt: PE32+ executable for MS Windows 5.02 (console)...
+```
+
+I am certainly neither qualified to give you cybersecurity advice regarding what to do should this happen, nor to claim that a file is definitely safe if it does return what you are expecting, but it is always best to proceed with caution.
+
+### 2.16. `grep`
+
+### 2.17. Text Editors - Nano + Vim
+I remember being surprised to learn that there are text editors built right into most terminal emulators. Two of the most ubiquitous are Nano and Vim. Nano is known for being a little more "beginner friendly". Note that the `^` notation by the commands at the bottom of the screen correspond to either the `CTRL` or `Command` keys depending on your device. `^Q` is therefore activated by pressing `CTRL` and `Q`  together (`CTRL + Q`).
+
+```
+$ nano file_a.txt
+```
+
+We can open the file with Vim as well. If you need to exit Vim without saving any changes, the command is `:qa!` (you do need to type the colon character `:`). If this doesn't work right away, press `<ESC>` a couple times first and then retry. Some of the most popular Vim memes are about people not being able to exit. I didn't know either the first few times I opened a document with Vim and needed to close my entire terminal.
+
+```
+$ vi file_a.txt
+```
+
+The use of each of these text editors is well beyond the scope of this primer, but I wanted you to know that they were there. Vim has an intense learning curve, but it's well worth the effort. The initial experience almost everyone has with Vim is "my keyboard stopped functioning", but once you've learned and practiced "Vim Motions" and cycling between the "normal", "insert", and "visual" modes, as well as learned how to create and run "macros", you'll be surprised at the speed and power at your fingertips. An added bonus is that several programs (like Obsidian md) and Integrated Development Environments (IDEs) have an option to enable Vim Motions, so the speed and fluency you learn can be applied elsewhere.
+
+### 2.18. Conclusion: Part 2
+I hope that at this point you feel much more confident with the command line than you were when you started. You may not be best friends yet, but just like all relationships, your relationship with the command line will take time and go through several ups and downs before you fully understand each other. While the beginning may have felt intimidating, so far you've:
+
+- Explored over 20 common commands
+- Learned how to check if a command is available 
+- Learned how to learn what those commands do
+- Understood Paths
+- Learned how to move around freely
+- Understood file permissions
+- Utilized Pipes
+- Learned how to perform basic interactions with files
+
+In Part 3 we'll cover a couple more essential commands and concepts concerning running command line tools you write yourself or find online.
