@@ -462,6 +462,44 @@ $ ls *[ad]*
 Though we have only been listing the files that match our descriptions, you use this same pattern matching when performing actions like moving files or searching through each a particular kind of file with a command like `grep`.
 
 ### 2.8. `rename`
+I don't know about you, but there has been a time or two I realized I had several files to rename and then sat there dreading how much tedious work it would be. The dread certainly scales with the number of files there are. If I knew about `rename` back then I could have saved a ton of time.
+
+```
+$ ls
+> old_file.txt
+$ rename "old" "new" "old_file.txt"
+$ ls 
+> new_file.txt
+```
+
+With the `-a` flag we can replace every instance of our target, which can be useful for times when you need to do things like replace every space in a file name with `_`.
+
+```
+$ rename -a " " "_" "a rather long and tedious file name.txt"
+$ ls
+> a_rather_long_and_tedious_file_name.txt
+```
+
+These commands don't have any guards on them, so you need to be absolutely sure about the change you're making. Those times that you're not 100% sure and want to check, we can use `-n --verbose` to see what change will take place without actually making the change.
+
+```
+$ rename -n --verbose "txt" "md" file_a.txt
+> `file_a.txt' -> `file_a.md'
+```
+
+Using what we learned about wildcards, we can apply changes like these to several files at once. Here's an example from the man page for a situation where you have files named "`file1`, `file2`, ... `file9`, `file10`, ..., `file278`, ..." The following will add a "00" between the recurring "file" name and any single digit, matched with `?`.
+
+```
+$ rename "file" "file00" "file?"
+```
+
+Then we can do something similar for the file names with double digits.
+
+```
+$ rename "file" "file0" "file??"
+```
+
+Now all of our files have 3 digits after the file name (`file001`, `file002`, ..., `file010`, ..., `file278`).
 
 ### 2.9. Pipes
 There are 3 kinds of "pipes" we'll discuss. Pipes are used to take the output of one command and use it in some way. The `>` pipe will *replace* the contents of the destination with the output of your command. The `>>` pipe will *append* the output of your command to the destination, adding to rather than replacing. The `|` pipe takes the output of one command and uses it as the input for the following command.
@@ -624,6 +662,28 @@ $ file suspicious.txt
 I am certainly neither qualified to give you cybersecurity advice regarding what to do should this happen, nor to claim that a file is definitely safe if it does return what you are expecting, but it is always best to proceed with caution.
 
 ### 2.16. `grep`
+When we want to find something but can't remember which file it's in, `grep` is a go to tool. There are several powerful options available and I encourage you to read about them in the man page. Using `grep` will generally take the form:
+
+```
+$ grep [OPTIONS] "what-to-search" "where-to-search"
+```
+
+Some useful options include:
+- `-A #` - print # lines after the match
+- `-B #` - print # lines before the match
+- `-C #` - print # lines surrounding the match
+- `-e` - Enable REGEX pattern matching for the "what-to-search" string.
+- `-i` - Make the search case-insensitive.
+- `-l` - Only print the names of the files that have matches.
+- `-L` - Only print the names of the files that DO NOT have matches.
+- `-n` - Include the line number of the file where there is a match.
+- `-r` - Recursively search each subdirectory 
+
+"Where to search" can include wildcards, allowing you to take such actions as "recursively searching through all of the '.log' files for a certain keyword, like "Time", ignoring capitalization, and printing the line numbers of the matched lines.
+
+```
+$ grep -rin "Time" *.log
+```
 
 ### 2.17. Text Editors - Nano + Vim
 I remember being surprised to learn that there are text editors built right into most terminal emulators. Two of the most ubiquitous are Nano and Vim. Nano is known for being a little more "beginner friendly". Note that the `^` notation by the commands at the bottom of the screen correspond to either the `CTRL` or `Command` keys depending on your device. `^Q` is therefore activated by pressing `CTRL` and `Q`  together (`CTRL + Q`).
