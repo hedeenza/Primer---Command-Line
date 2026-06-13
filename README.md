@@ -47,6 +47,20 @@ A short and simple introduction to core command line commands and concepts
     2.16. [`grep`](https://github.com/hedeenza/Primer---Command-Line#216-grep)  
     2.17. [Text Editors - Nano + Vim](https://github.com/hedeenza/Primer---Command-Line#217-text-editors---nano--vim)  
     2.18. [Conclusion: Part 2](https://github.com/hedeenza/Primer---Command-Line#218-conclusion-part-2)  
+3. [Downloads, Executables, and `.bashrc`]()
+    3.1. [`curl`](https://github.com/hedeenza/Primer---Command-Line#31-curl)
+    3.1.1. [!!! CARDINAL SECURITY SINS !!!]()
+    3.2. [`wget`](https://github.com/hedeenza/Primer---Command-Line#32-wget)
+    3.3. [`sha256sum`](https://github.com/hedeenza/Primer---Command-Line#33-sha256sum)
+    3.4. [`b2sum`](https://github.com/hedeenza/Primer---Command-Line#34-b2sum)
+    3.5. [`gpg`](https://github.com/hedeenza/Primer---Command-Line#35-gpg)
+    3.6. [`chmod`](https://github.com/hedeenza/Primer---Command-Line#36-chmod)
+    3.6.1. [Executing Scripts]()
+    3.7. [`env`](https://github.com/hedeenza/Primer---Command-Line#37-env)
+    3.8. [`.bashrc`]()
+    3.8.1. [Adding Directories to Your Path]()
+    3.8.2. [Command Aliases]()
+    3.9. Conclusion: Part 3
   
 ## 0. Introduction
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
@@ -713,3 +727,71 @@ I hope that at this point you feel much more confident with the command line tha
 - Learned how to perform basic interactions with files
 
 In Part 3 we'll cover a couple more essential commands and concepts concerning running command line tools you write yourself or find online.
+
+## 3. Downloads, Executables, and `.bashrc`
+
+### 3.1. `curl`
+Downloading things from the Internet.
+
+The man page for curl is a novel, or at 39,219 words, technically a [novella](https://en.wikipedia.org/wiki/Novella).
+
+```
+$ man curl | wc -w
+> 39219
+```
+
+#### 3.1.1. !!! CARDINAL SECURITY SINS !!!
+The instructions for acquiring many popular tools ask that you "pipe curl into bash". These include: [The Rust Language](https://rust-lang.org/tools/install/), [Homebrew](https://brew.sh/), and [Tauri](https://tauri.app/). This command flow downloads whatever exists at the link to your device using `curl`, and then immediately runs it using `sh`. Even if the source is trusted there is a risk that the download itself could have been compromised.
+
+```
+$ curl <some-link> | sh
+$ sh <(curl <some-link>)
+```
+
+### 3.2. `wget`
+Downloading things from the Internet.
+
+### 3.3. `sha256sum`
+A one-way cryptographic hashing function.
+
+Getting the sha256 checksum for a file.
+
+Creating a file to check against (`>>`)
+
+Checking against a file (`-c`)
+
+### 3.4. `b2sum`
+Similar to the `sha256sum` but with a different algorithm
+
+### 3.5. `gpg`
+Signing
+
+### 3.6. `chmod`
+Changing permissions
+
+```
+$ chmod who (permit-or-restrict) what <File>
+```
+
+User (`u`), Group (`g`), Other(`o`), All(`a`)
+Permit(`+`) or Restrict(`-`)
+Read(`r`), Write(`w`), Execute(`x`) 
+Stringing multiple changes together at once with `,`
+
+#### 3.6.1. Executing Scripts
+Shell scripts
+`$ sh executable_file.sh`
+Binary executables
+`$ ./executable_file`
+
+### 3.7. `env`
+Some tools may require the creation or editing of environmental variables.
+
+### 3.8. `.bashrc`
+#### 3.8.1. Adding Directories to Your Path
+#### 3.8.2. Command Aliases
+### 3.9. Conclusion: Part 3
+
+## 4. Where To Go From Here
+Additional commands that are worth knowing: `ssh`, `ps`, `rsync`, `sed`, 
+Resources: [The Complete Bash Scripting Course](https://www.youtube.com/watch?v=Sx9zG7wa4FA) by [You Suck at Programming](https://www.youtube.com/@yousuckatprogramming)
