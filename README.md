@@ -897,6 +897,7 @@ There are *so* many useful commands and you'll stumble upon ways of using even f
 
 - `comm` - compare two sorted files line by line
 - `diff` - compare files line by line
+- `git` - version control system
 - `gzip` / `gunzip` - compress or expand files
 - `ln` - make links between files (including symbolic links, which assist the "I wish this file was here but I can't / shouldn't actually move it here" problem).
 - `ps`, `top` - report a snapshot of the current processes.
