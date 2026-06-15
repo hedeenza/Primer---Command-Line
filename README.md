@@ -61,6 +61,11 @@ A short and simple introduction to core command line commands and concepts
     3.8.1. [Adding Directories to Your Path]()
     3.8.2. [Command Aliases]()
     3.9. Conclusion: Part 3
+4. [Where To Go From Here]()
+    4.1. [Additional Commands That Are Worth Knowing]()
+    4.2. [Other Command Line Methods]()
+    4.3. [Taking The Time To Learn Vim / Neovim]()
+    4.4. [Resources]()
   
 ## 0. Introduction
 Coming from a world of Graphic User Interfaces (GUIs) like Windows Explorer, the first time I (intentionally) opened a Command Line Interface (CLI) was incredibly intimidating. At first glance there's nothing there to explain what you're looking at, what you should be doing, or what's even possible. Only a couple characters and a blinking cursor stare back at you, silently awaiting your direction. This primer will only scratch the very surface of the vast and powerful possibilities when working with a CLI; but if all goes well, by the end you should be able to (1) know what kinds of questions to ask, (2) know where to find more help, (3) not feel like you're drowning while reading instructions that involve the command line.
@@ -731,25 +736,41 @@ In Part 3 we'll cover a couple more essential commands and concepts concerning r
 ## 3. Downloads, Executables, and `.bashrc`
 
 ### 3.1. `curl`
-Downloading things from the Internet.
-
-The man page for curl is a novel, or at 39,219 words, technically a [novella](https://en.wikipedia.org/wiki/Novella).
+`curl` is a command for downloading things from the Internet. The man page for curl is a novel, or at 39,219 words, technically a [novella](https://en.wikipedia.org/wiki/Novella).
 
 ```
 $ man curl | wc -w
 > 39219
 ```
 
-#### 3.1.1. !!! CARDINAL SECURITY SINS !!!
-The instructions for acquiring many popular tools ask that you "pipe curl into bash". These include: [The Rust Language](https://rust-lang.org/tools/install/), [Homebrew](https://brew.sh/), and [Tauri](https://tauri.app/). This command flow downloads whatever exists at the link to your device using `curl`, and then immediately runs it using `sh`. Even if the source is trusted there is a risk that the download itself could have been compromised.
+There's a ton `curl` can do, and a lot of it may not be relevant to you. In the interest of keeping this guide short, I encourage you to look for external resources for more on this command. There are a ton of videos on YouTube *just* about how to use `curl`. But to get you started, the basic form of the command is:
 
 ```
+$ curl <some-link>
+```
+
+#### 3.1.1. !!! CARDINAL SECURITY SINS !!!
+The instructions for acquiring many popular tools ask that you "pipe curl into bash". These include: [The Rust Language](https://rust-lang.org/tools/install/), [Homebrew](https://brew.sh/), [uv](https://docs.astral.sh/uv/#installation), and [Tauri](https://tauri.app/). This command flow downloads whatever exists at the link to your device using `curl`, and then immediately runs it using `sh`. Even if the source is trusted there is a risk that the download itself could have been compromised. The command will look like one of the following:
+
+```
+!!! RUN WITH EXTREME CAUTION !!!
 $ curl <some-link> | sh
 $ sh <(curl <some-link>)
+!!! RUN WITH EXTREME CAUTION !!!
 ```
 
+If there are no other options for installing the tool, what are you to do? The simplest remedy for the situation is to break up the commands and not use the pipe. Download the installer script with `curl`, carefully inspect the element for what it's doing, and once you've determined nothing suspicious is going on, *then* run the script with `sh`. If you are a mostly non-technical command line user, you may be thinking "Great, now I can look at it but I don't know what's actually going on here." If you cannot verify yourself you must do some offloading of trust to someone else. We'll discuss more about verifying downloads in *3.3. `sha256sum`* and *3.5. `gpg`*. 
+
+Note that malicious changes can seem relatively innocuous at first. In the [hijacking of orphaned packages on the Arch User Repository](https://thehackernews.com/2026/06/over-400-arch-linux-aur-packages.html), scripts were changed to use `npm` to download a malicious package that ran when the package was built. They even made it look like the changes were made by "a long-standing maintainer, an account an Arch Linux Trusted User later confirmed was never compromised."
+
+Often the installer scripts for tools like this are available on [GitHub](https://github.com/). A search for "<Tool Name> github" should bring up a link to the project repository if there is one. After confirming that the installer script on GitHub is the same one you downloaded (or just downloading/copy-pasting the GitHub version to be sure), you can find the "Blame" for the code, which includes time stamps, who made the changes, and often a note about the changes. If it is a popular tool and there haven't been any very recent changes, there is a chance you can proceed without worrying too much. Popular tools with a lot of eyes on them tend to make changes quickly even if something malicious happens. This is of course no guarantee, but it's one more method for making sure you know what's happening before you download.
+
 ### 3.2. `wget`
-Downloading things from the Internet.
+`wget` is another tool for downloading things from the Internet. Much like `curl` there are several options and capabilities. The basic form of the command is:
+
+```
+$ wget <some-link>
+```
 
 ### 3.3. `sha256sum`
 A one-way cryptographic hashing function.
@@ -778,7 +799,7 @@ $ sha256sum <FILE>
 > <some-alphanumeric-string>
 ```
 
-Sometimes downloads will be accompanied by a file to check the sha256sums against so you don't have to compare the values manually. We can create a file to check against using pipes.
+Sometimes downloads will be accompanied by a file to check the sha256sums against so you don't have to compare the values manually. With some files there are even checksums *for the checksums files*! We can create a file to check against using pipes.
 
 ```
 $ sha256sum <FILE> >> sha256sums.txt
@@ -792,7 +813,7 @@ sha256sum -c sha256sums.txt
 ```
 
 ### 3.4. `b2sum`
-Similar to the `sha256sum` but with a different algorithm.
+The `b2sum` is similar to the `sha256sum` but uses a different algorithm. You may see a `b2sum` hash listed in addition to or alongside a `sha256` checksum.
 
 ### 3.5. `gpg`
 Signing
@@ -810,9 +831,13 @@ Who can be the User (`u`), Group (`g`), Other(`o`), or All(`a`). We can add perm
 $ chmod u+x <FILE>
 ```
 
-Stringing multiple changes together at once with `,`
+We can stringing multiple changes together at once with `,`. The following will add execute permissions for the user while also adding write and execute permissions for the group.
 
-We can set permissions quickly using [octal notation](https://en.wikipedia.org/wiki/Chmod). For example, the first command of the following sets the User to being able to read-write-execute, the Group to read-write, and Other to read-only (`.rwxrw-r--`); the second command sets the User to read and execute, and everyone else to none:
+```
+$ chmod u+x,g+wx <FILE>
+```
+
+We can set permissions quickly using [octal notation](https://en.wikipedia.org/wiki/Chmod). For example, the first command of the following sets the User to being able to read-write-execute, the Group to read-write, and Other to read-only (`.rwxrw-r--`); the second command sets the User to read and execute, and everyone else to none (`.r-x------`):
 
 ```
 $ chmod 764 <FILE> 
@@ -857,7 +882,37 @@ I always like to check that I'm not creating an alias that is actually a differe
 ### 3.9. Conclusion: Part 3
 
 ## 4. Where To Go From Here
-The beginning of the journey.
-Additional commands that are worth knowing: `ssh`, `ps`, `rsync`, `sed`, `tar`
-Learning Vim.
-Resources: [The Complete Bash Scripting Course](https://www.youtube.com/watch?v=Sx9zG7wa4FA) by [You Suck at Programming](https://www.youtube.com/@yousuckatprogramming)
+At the beginning of this guide we set out to achieve the following by the end:
+
+1. Know what kinds of questions to ask
+2. Know where to find more help
+3. Not feel like you're drowning while reading instructions that involve the command line.
+
+I hope that by introducing a range of tools, core concepts like options and safety, and `man` pages, you feel you know enough that you can search for help effectively and understand what you're reading when you find it.
+
+If you so choose this is just the beginning of a much longer the journey with the command line.
+
+### 4.1. Additional Commands That Are Worth Knowing
+There are *so* many useful commands and you'll stumble upon ways of using even familiar tools that will blow your mind over and over again. 
+
+- `comm` - compare two sorted files line by line
+- `diff` - compare files line by line
+- `gzip` / `gunzip` - compress or expand files
+- `ln` - make links between files (including symbolic links, which assist the "I wish this file was here but I can't / shouldn't actually move it here" problem).
+- `ps`, `top` - report a snapshot of the current processes.
+- `rsync` - a fast, versatile, remote (and local) file-copying tool
+- `sed` - stream editor for filtering and transforming text
+- `ssh`, `ssh-keygen`, `ssh-agent`, `ssh-copy-id` - OpenSSH remote login client, handling SSH keys. Here's a [video to get started](https://www.youtube.com/watch?v=YS5Zh7KExvE).
+- `tar` - an archiving utility
+
+### 4.2. Other Command Line Methods
+- Redirecting with `<`
+- Process substitution `<()`
+
+### 4.3. Taking The Time To Learn Vim / Neovim
+While the first stages of learning Vim are intense and unintuitive, I do strongly recommend learning it if you're going to spend an appreciable amount of time programming, coding, or otherwise editing text with a keyboard. The speed and freedom Vim Motions and Vim macros can provide are unmatched, and they're available in more places than you'd think. There are certain tasks I would have either thought impossible, or at least taken far more time than they were worth, had it not been for he capabilities of Vim.
+
+### 4.4. Resources 
+- [W3 Schools Bash Tutorial](https://www.w3schools.com/bash/index.php)
+- [The Complete Bash Scripting Course](https://www.youtube.com/watch?v=Sx9zG7wa4FA) by [You Suck at Programming](https://www.youtube.com/@yousuckatprogramming)
+- [The Primeagen's Vim As Your Editor Series Intro](https://www.youtube.com/watch?v=X6AR2RMB5tE)
