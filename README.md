@@ -753,30 +753,71 @@ Downloading things from the Internet.
 
 ### 3.3. `sha256sum`
 A one-way cryptographic hashing function.
+One-way meaning we can generate a consistent output from a known input, but cannot determine the input from the output.
+64 character alpha-numeric string.
+A way to check the integrity of a download.
+Does not guarantee the safety of a file, but can help you know that you have downloaded what you intended to.
+Very sensitive to changes.
+
+```
+$ echo "this sentence will become the input for our hashing function" | sha256sum
+> 3211369cb4c274c87533289faf9379b49f658cd8835df1a78e6f44b5deb2e7e8
+```
+
+We can see how much making the first letter a capital changes the resulting value.
+
+```
+$ echo "This sentence will become the input for our hashing function" | sha256sum
+> 2d3ce1feb9e3d2a2f03eb14eee8443a93dd5dc028e05a8392b8e770512047dae
+```
 
 Getting the sha256 checksum for a file.
 
-Creating a file to check against (`>>`)
+```
+$ sha256sum <FILE>
+> <some-alphanumeric-string>
+```
 
-Checking against a file (`-c`)
+Sometimes downloads will be accompanied by a file to check the sha256sums against so you don't have to compare the values manually. We can create a file to check against using pipes.
+
+```
+$ sha256sum <FILE> >> sha256sums.txt
+```
+
+We can check the hashes of each of the files in the working directory against our file using the `-c` option.
+
+```
+sha256sum -c sha256sums.txt
+> FILE: OK
+```
 
 ### 3.4. `b2sum`
-Similar to the `sha256sum` but with a different algorithm
+Similar to the `sha256sum` but with a different algorithm.
 
 ### 3.5. `gpg`
 Signing
 
 ### 3.6. `chmod`
-Changing permissions
+We can change the permissions of files using the `chmod` command. Generally commands will take the following form:
 
 ```
 $ chmod who (permit-or-restrict) what <File>
 ```
 
-User (`u`), Group (`g`), Other(`o`), All(`a`)
-Permit(`+`) or Restrict(`-`)
-Read(`r`), Write(`w`), Execute(`x`) 
+Who can be the User (`u`), Group (`g`), Other(`o`), or All(`a`). We can add permissions with `+` and remove them with `-`. The basic permissions we can specify are Read(`r`), Write(`w`), and Execute(`x`). For example, if we want to "add executable permissions for the user to a file":
+
+```
+$ chmod u+x <FILE>
+```
+
 Stringing multiple changes together at once with `,`
+
+We can set permissions quickly using [octal notation](https://en.wikipedia.org/wiki/Chmod). For example, the first command of the following sets the User to being able to read-write-execute, the Group to read-write, and Other to read-only (`.rwxrw-r--`); the second command sets the User to read and execute, and everyone else to none:
+
+```
+$ chmod 764 <FILE> 
+$ chmod 500 <FILE> 
+```
 
 #### 3.6.1. Executing Scripts
 Shell scripts
@@ -785,13 +826,38 @@ Binary executables
 `$ ./executable_file`
 
 ### 3.7. `env`
-Some tools may require the creation or editing of environmental variables.
+Some tools may require the creation or editing of environmental variables. For an alphabetized list of your current environmental variables:
+
+```
+$ env | sort
+> VARIABLE=value
+> ...
+```
 
 ### 3.8. `.bashrc`
+The `.bashrc` file is a hidden file that lives in your home directory. When you start a terminal session, every command in your `.bashrc` is run, effectively meaning that changes you make here will be persistent after you close your terminal. Your terminal emulator may use a `.zshrc` for this same purpose.
+
 #### 3.8.1. Adding Directories to Your Path
+There are times when you will want your terminal to look in more places for commands than it does by default. We can add lines like the following to our `.bashrc` file to that end. This will allow us to run our own commands from anywhere, just like we do the commands that are already built into your device. We can add additional lines whenever we want our terminal to look in additional directories for commands.
+
+```
+# An optional comment explaining why you added this to your PATH
+export PATH="$PATH:/home/user-name/path/to/desired/directory"
+```
+
 #### 3.8.2. Command Aliases
+Sometimes the full command name for a command we install or write ourselves can be burdensome to type over and over, even with tab completion. We can create an alias to let our terminal know that when we type our custom abbreviation, we really mean to run the intended command. 
+
+```
+alias something_short="a_much_longer_or_undesirable_command" # Any desired notes for your later reference?
+```
+
+I always like to check that I'm not creating an alias that is actually a different command by running `which something_short` first and seeing if my intended alias returns something unexpected.
+
 ### 3.9. Conclusion: Part 3
 
 ## 4. Where To Go From Here
-Additional commands that are worth knowing: `ssh`, `ps`, `rsync`, `sed`, 
+The beginning of the journey.
+Additional commands that are worth knowing: `ssh`, `ps`, `rsync`, `sed`, `tar`
+Learning Vim.
 Resources: [The Complete Bash Scripting Course](https://www.youtube.com/watch?v=Sx9zG7wa4FA) by [You Suck at Programming](https://www.youtube.com/@yousuckatprogramming)
