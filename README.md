@@ -913,6 +913,8 @@ There are *so* many useful commands and you'll stumble upon ways of using even f
 ### 4.3. Taking The Time To Learn Vim / Neovim
 While the first stages of learning Vim are intense and unintuitive, I do strongly recommend learning it if you're going to spend an appreciable amount of time programming, coding, or otherwise editing text with a keyboard. The speed and freedom Vim Motions and Vim macros can provide are unmatched, and they're available in more places than you'd think. There are certain tasks I would have either thought impossible, or at least taken far more time than they were worth, had it not been for he capabilities of Vim.
 
+![Vim is a pathway to many abilities some consider to be unnatural](StarWars_meme.png)
+
 ### 4.4. Resources 
 - [W3 Schools Bash Tutorial](https://www.w3schools.com/bash/index.php)
 - [The Complete Bash Scripting Course](https://www.youtube.com/watch?v=Sx9zG7wa4FA) by [You Suck at Programming](https://www.youtube.com/@yousuckatprogramming)
