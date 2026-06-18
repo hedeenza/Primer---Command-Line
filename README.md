@@ -818,6 +818,36 @@ The `b2sum` is similar to the `sha256sum` but uses a different algorithm. You ma
 ### 3.5. `gpg`
 Signing
 
+List all current gpg keys using `--fingerprint` and `--list-keys` / `-k`.
+
+```
+$ gpg --fingerprint
+```
+
+```
+$ gpg --list-keys
+```
+
+Receiving keys with `--receive-keys` / `--recv-keys`.
+
+```
+$ gpg --receive-keys
+```
+
+To create a "detached" signature file, separate from the target file itself.
+
+```
+$ gpg --detach-sign
+```
+
+Verify a signature for a (1) file or (2) a detached signature and the file it signs for.
+
+```
+$ gpg --verify <FILE>
+OR 
+$ gpg --verify <SIGNATURE-FILE> <SIGNED-DATA>
+```
+
 ### 3.6. `chmod`
 We can change the permissions of files using the `chmod` command. Generally commands will take the following form:
 
