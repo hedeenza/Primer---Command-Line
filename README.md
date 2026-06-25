@@ -935,10 +935,12 @@ There are *so* many useful commands and you'll stumble upon ways of using even f
 - `sed` - stream editor for filtering and transforming text
 - `ssh`, `ssh-keygen`, `ssh-agent`, `ssh-copy-id` - OpenSSH remote login client, handling SSH keys. Here's a [video to get started](https://www.youtube.com/watch?v=YS5Zh7KExvE).
 - `tar` - an archiving utility
+- `time` - time the execution of a script
 
 ### 4.2. Other Command Line Methods
 - Redirecting with `<`
 - Process substitution `<()`
+- Background jobs (`&`, `bg`, `fg`, `nohup`, `nohup <COMMAND> &`, `jobs`, `kill`)
 
 ### 4.3. Taking The Time To Learn Vim / Neovim
 While the first stages of learning Vim are intense and unintuitive, I do strongly recommend learning it if you're going to spend an appreciable amount of time programming, coding, or otherwise editing text with a keyboard. The speed and freedom Vim Motions and Vim macros can provide are unmatched, and they're available in more places than you'd think. There are certain tasks I would have either thought impossible, or at least taken far more time than they were worth, had it not been for he capabilities of Vim.
